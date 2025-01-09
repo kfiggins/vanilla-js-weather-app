@@ -1,13 +1,9 @@
-import { localWeather } from "./views";
-
-const radar = () => {
-  return `<h1>Radar</h1>`;
-};
+import localWeather from "./views/local-weather/index.js";
+import radar from "./views/radar/index.js";
 
 const renderPage = () => {
   const app = document.getElementById("app");
   const route = window.location.hash.slice(1);
-  console.log(app, route);
 
   switch (route) {
     case "local":
@@ -18,8 +14,10 @@ const renderPage = () => {
       break;
     default:
       app.innerHTML = `<h1>Welcome to the weather app</h1>
-      <a href="#local">Local Weather</a>
-      <a href="#radar">Radar</a>`;
+      <div style="display:flex; flex-direction:column;">
+        <a href="#local">Local Weather</a>
+        <a href="#radar">Radar</a>
+      </div>`;
   }
 };
 
