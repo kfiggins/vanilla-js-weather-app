@@ -1,6 +1,20 @@
+import { weatherCodeToIcon } from "./config/weather-code-to-icon.js";
+import { convertMetersToFeet } from "./helpers/convert-meters-to-feet.js";
+import { convertToFahrenheit } from "./helpers/convert-to-fahrenheit.js";
+
 export default async () => {
+  const currentLocation = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  }).catch((error) => {
+    console.error("There was a problem with the geolocation operation:", error);
+  });
+
+  if (!currentLocation) {
+    return `<h1>Could not get your location</h1>`;
+  }
+
   const weatherData = await fetch(
-    "https://api.open-meteo.com/v1/forecast?latitude=40.072720&longitude=-85.990140&current_weather=true",
+    `https://api.open-meteo.com/v1/forecast?latitude=${currentLocation.coords.latitude}&longitude=${currentLocation.coords.longitude}&current_weather=true`,
   )
     .then((response) => {
       if (!response.ok) {
@@ -15,16 +29,16 @@ export default async () => {
       console.error("There was a problem with the fetch operation:", error);
     });
 
+  console.log(JSON.stringify(weatherData, null, 2));
+
   return `<div>
-           <h1>Local Weather</h1>
+           <h1>Current Local Weather</h1>
 
            <p>Temperature: ${convertToFahrenheit(weatherData.current_weather.temperature)} F</p><p>Temperature: ${weatherData.current_weather.temperature} C</p>
            <p>Wind Speed: ${weatherData.current_weather.windspeed}</p>
            <p>Wind Direction: ${weatherData.current_weather.winddirection}</p>
 
-          </div>`;
-};
+          <p>Elevation: ${convertMetersToFeet(weatherData.elevation)} ft</p><p>Elevation: ${weatherData.elevation}m</p>
 
-const convertToFahrenheit = (celsius) => {
-  return (celsius * 9) / 5 + 32;
+          <p>Weather Condition: ${weatherCodeToIcon[weatherData.current_weather.weathercode]}</p> </div>`;
 };
