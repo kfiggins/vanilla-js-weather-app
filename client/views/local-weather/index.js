@@ -1,6 +1,6 @@
 import { weatherCodeToIcon } from "./config/weather-code-to-icon.js";
 import { convertMetersToFeet } from "./helpers/convert-meters-to-feet.js";
-import { convertToFahrenheit } from "./helpers/convert-to-fahrenheit.js";
+import { convertToFahrenheit } from "../../utils/convert-to-fahrenheit.js";
 
 export default async () => {
   const currentLocation = await new Promise((resolve, reject) => {
@@ -28,8 +28,6 @@ export default async () => {
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
     });
-
-  console.log(JSON.stringify(weatherData, null, 2));
 
   return `<div>
            <h1>Current Local Weather</h1>

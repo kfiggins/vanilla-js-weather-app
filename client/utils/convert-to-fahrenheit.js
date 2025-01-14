@@ -1,3 +1,3 @@
 export const convertToFahrenheit = (celsius) => {
-  return (celsius * 9) / 5 + 32;
+  return Math.round((celsius * 9) / 5 + 32);
 };

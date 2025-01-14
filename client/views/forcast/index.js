@@ -1,6 +1,4 @@
-import { weatherCodeToIcon } from "../local-weather/config/weather-code-to-icon.js";
-import { convertMetersToFeet } from "../local-weather/helpers/convert-meters-to-feet.js";
-import { convertToFahrenheit } from "../local-weather/helpers/convert-to-fahrenheit.js";
+import { convertToFahrenheit } from "../../utils/convert-to-fahrenheit.js";
 
 export default async () => {
   const currentLocation = await new Promise((resolve, reject) => {
