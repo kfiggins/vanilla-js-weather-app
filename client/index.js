@@ -11,7 +11,7 @@ const renderPage = async () => {
       app.innerHTML = await localWeather();
       break;
     case "radar":
-      app.innerHTML = await radar();
+      app.appendChild(await radar());
       break;
     case "forcast":
       app.innerHTML = await forcast();
