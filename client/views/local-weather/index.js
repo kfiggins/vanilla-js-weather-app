@@ -2,12 +2,8 @@ import { weatherCodeToIcon } from "./config/weather-code-to-icon.js";
 import { convertMetersToFeet } from "./helpers/convert-meters-to-feet.js";
 import { convertToFahrenheit } from "../../utils/convert-to-fahrenheit.js";
 
-export default async () => {
-  const currentLocation = await new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  }).catch((error) => {
-    console.error("There was a problem with the geolocation operation:", error);
-  });
+export default async ({ appStore }) => {
+  const currentLocation = appStore.getState().currentLocation;
 
   if (!currentLocation) {
     return `<h1>Could not get your location</h1>`;
